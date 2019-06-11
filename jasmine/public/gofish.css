@@ -1,0 +1,247 @@
+/* .App {
+  /* text-align: center; */
+/* }
+
+.App-join {
+  text-align: center;
+} */
+.center {
+  text-align: center;
+}
+/*.loader-container {
+  margin-left: 45%;
+} */
+
+/* .background-enter {
+  transform: translate(100%);
+}
+.background-enter.background-enter-active {
+  transform: translate(0%);
+  transition: transform 1000ms ease-in-out;
+}
+.background-leave {
+  transform: translate(0%);
+}
+.background-leave.background-leave-active {
+  transform: translate(-100%);
+  transition: transform 1000ms ease-in-out;
+}
+.loader {
+  margin-left: -50px;
+  border-top: 50px solid #dce800;
+  border-bottom: 50px solid #3ea826;
+  border-right: 50px solid #3b6ec6;
+  border-left: 50px solid #ff9000;
+  border-radius: 50%;
+  width: 1px;
+  height: 1px;
+  animation: spin 0.5s linear infinite;
+}
+
+p {
+  font-size: 30px;
+}
+
+.closser-to-gether {
+  margin-bottom: -30px;
+}
+
+.less-top-margin {
+  margin-top: -20px;
+}
+
+.further-from {
+  margin-top: 50px;
+}
+
+.less-top-margin {
+  margin-top: -20px;
+}
+
+.more-margin-bottom {
+  margin-bottom: 30px;
+}
+
+.book {
+  margin-top: -20px;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.App-logo {
+  animation: App-logo-spin infinite 1s linear;
+  height: 80px;
+}
+
+.App-header {
+  background-color: #227755;
+  height: 150px;
+  padding: 20px;
+  color: #442200;
+  text-align: center;
+}
+
+.endGame {
+  text-align: center;
+} */
+
+.playing-space {
+  text-align: center;
+  height: 96px;
+}
+.hand {
+  margin-left: 50px;
+}
+.card-back {
+  margin-left: -50px;
+  width: 71px;
+}
+
+.card-in-hand {
+  margin-left: -50px;
+  width: 71px;
+}
+
+.player-hand {
+  margin-left: -60px;
+  width: 71px;
+}
+/*
+.highlight {
+  border: 4px solid #227755;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+.bot-name {
+  margin-top: -5px;
+}
+.less-margin-right {
+  margin-left: 60px;
+}
+.highlight-player {
+  border: 4px solid #227755;
+  border-radius: 10px;
+  padding: 10px;
+  margin-top: 30px;
+} */
+.player-hand {
+  margin-left: -50px;
+  width: 71px;
+}
+/*
+.center-cards {
+  text-align: center;
+  margin-bottom: 50px;
+}
+.center-cards img {
+  width: 71px;
+  margin-left: -68px;
+} */
+/*
+.holder {
+  margin-top: -15px;
+  display: flex;
+  justify-content: space-around;
+  flex-direction: row;
+}
+
+.bot {
+  text-align: center;
+  width : 190px;
+  margin: 0 20px 10px 20px;
+  display : inline-block;
+}
+
+.App-title {
+  font-size: 1.5em;
+}
+
+.App-intro {
+  font-size: large;
+}
+
+.log {
+  background-color: lightgrey;
+  float: bottom;
+  float: right;
+  margin-right: 40px;
+  margin-bottom: 40px;
+  margin-top: -350px;
+  border: 3px solid grey;
+  border-radius: 20px;
+  padding-top: 20px;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-bottom: -40px;
+}
+
+.submit {
+  font-size: 40px;
+  background-color: #227755;
+}
+.bigger {
+  font-size: 80px;
+}
+
+.inbetween-match {
+  margin-right: 10px;
+}
+
+.matches {
+  display: inline;
+}
+
+.match {
+  width: 45px;
+  margin-left: -37px;
+} */
+
+.player-spot {
+  text-align: center;
+}
+
+/* #center_pile {
+  width: 71px;
+  height: 96px;
+}
+#random_number {
+
+} */
+.flex-container {
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+.bot {
+  margin: 30px;
+}
+
+/* #playing_space {
+  height: 300px;
+}
+#your_hand {
+  margin-left: -100px;
+}
+#playing_space center {
+  margin-top: 140px;
+}
+#playing_space center img {
+  margin-top: -40px;
+}
+#heading {
+  background-color: lightblue;
+  color: darkblue;
+}
+#hand {
+  margin-right: -40px;
+  width: 71px;
+  height: 96px;
+}
+
+@keyframes App-logo-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+} */

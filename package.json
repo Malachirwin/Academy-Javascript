@@ -1,0 +1,28 @@
+{
+  "name": "javascript",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Malachirwin/Academy-Javascript.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Malachirwin/Academy-Javascript/issues"
+  },
+  "homepage": "https://github.com/Malachirwin/Academy-Javascript#readme",
+  "devDependencies": {
+    "eslint": "^5.16.0",
+    "eslint-plugin-react": "^7.13.0"
+  },
+  "dependencies": {
+    "eslint-plugin-html": "^5.0.5",
+    "eslint-plugin-jest": "^22.6.4",
+    "eslint-plugin-react-native": "^3.7.0"
+  }
+}
