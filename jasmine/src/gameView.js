@@ -46,7 +46,7 @@ class GameView {
   }
 
   resetAndRender() {
-    this.render(document.getElementById('main'))
+    this.draw(document.getElementById('main'))
     this._targetPlayer = ""
     this._targetCard = ""
     this._showingButton = false
@@ -65,35 +65,41 @@ class GameView {
   }
 
   draw(container) {
-    this.render(container)
-  }
-
-  render(container) {
     const temp = document.getElementById("temp")
     if (temp !== null) { temp.remove() }
     const div = document.createElement(`div`)
     div.id = "temp"
-    const playerNames = this.game().players().map(pl => pl.name())
-    const cardHtml = this.game().player().playerHand().map(card => `<img class="card-in-hand" src="${card.toImgPath()}" name="${card.rank()}"/>`)
-    const cardBack = `<img class="card-back" src="public/cards/backs_custom.jpg"/>`
-    const bots = [1, 2, 3].map(num => `<div id=${num} class="bot"><h3>${this.game().players()[num].name()}</h3><div class="hand">${this.game().players()[num].playerHand().map(card => cardBack).join('')}</div></div>`)
-    const logs = this._log.reverse().map(log => `<h4 class="book">${log}</h4>`)
-
     const markup = `
       <div class="center">
         <h1>Go Fish</h1>
-        <div class="flex-container">${bots.join('')}</div>
-        <div class="playing-space">${(this.game().deck().hasCards() === true) ? cardBack : ""}</div>
+        <div class="flex-container">${this.bots().join('')}</div>
+        <div class="playing-space">${(this.game().deck().hasCards() === true) ? this.cardBack() : ""}</div>
         <div class="player-spot"> :
-          <div class="log"><h4 class="book">Logs</h4>${logs.join('')}</div>
+          <div class="log"><h4 class="book">Logs</h4>${this.logs().join('')}</div>
           <h1 class="player-name">${this.game().player().name()}</h1>
-          <div class="hand">${cardHtml.join('')}</div>
+          <div class="hand">${this.cardHtml().join('')}</div>
         </div>
       </div>
     `
     div.innerHTML = markup
     container.appendChild(div)
     this.addOnClick()
+  }
+
+  cardHtml() {
+    return this.game().player().playerHand().map(card => `<img class="card-in-hand" src="${card.toImgPath()}" name="${card.rank()}"/>`)
+  }
+
+  cardBack() {
+    return `<img class="card-back" src="public/cards/backs_custom.jpg"/>`
+  }
+
+  bots() {
+    return [1, 2, 3].map(num => `<div id=${num} class="bot"><h3>${this.game().players()[num].name()}</h3><div class="hand">${this.game().players()[num].playerHand().map(card => this.cardBack()).join('')}</div></div>`)
+  }
+
+  logs() {
+    return this._log.reverse().map(log => `<h4 class="book">${log}</h4>`)
   }
 
   addOnClick() {
