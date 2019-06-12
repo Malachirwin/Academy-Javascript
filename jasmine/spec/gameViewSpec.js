@@ -17,4 +17,36 @@ describe('GameView', () => {
     expect(document.querySelectorAll('img').length).toEqual((botCards * 3) + playerCards + centerPile)
     container.remove()
   });
+
+  it('clicks a card and highlights it', () => {
+    card = document.querySelector('.card-in-hand')
+    card.click()
+    expect(card.classList).toContain('highlight')
+    container.remove()
+  });
+
+  it('clicks a bot and highlights it', () => {
+    bot = document.querySelector('.bot')
+    bot.click()
+    expect(bot.classList).toContain('highlight-player')
+    container.remove()
+  });
+
+  it("requests a card", () => {
+    const numberOfCardsInHandBefore = 5
+    expect(document.querySelectorAll('.card-in-hand').length).toEqual(numberOfCardsInHandBefore)
+    document.querySelector('.card-in-hand').click()
+    document.querySelector('.bot').click()
+    const button = document.querySelector('button')
+    expect(button.textContent).toContain('Request')
+    button.click()
+    expect(document.querySelector('button')).toEqual(null)
+    expect(document.querySelectorAll('.card-in-hand').length).toBeGreaterThan(numberOfCardsInHandBefore)
+    container.remove()
+  });
+
+  it("has a game log", () => {
+    expect(document.body.textContent).toContain('Log')
+    container.remove()
+  });
 });
