@@ -6,7 +6,6 @@ class LoginView {
   onSubmit(event) {
     event.preventDefault()
     this._onload(event.target.name.value)
-    document.getElementById('login').remove()
   }
 
   draw(container) {

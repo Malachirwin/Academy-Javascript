@@ -1,6 +1,7 @@
 describe('GameView', () => {
   beforeEach(() => {
     container = document.createElement('div')
+    container.id = "main"
     document.body.appendChild(container)
     game = new Game("Malachi")
     view = new GameView(game)
@@ -21,14 +22,14 @@ describe('GameView', () => {
   it('clicks a card and highlights it', () => {
     card = document.querySelector('.card-in-hand')
     card.click()
-    expect(card.classList).toContain('highlight')
+    expect(document.querySelector('.card-in-hand').classList).toContain('highlight')
     container.remove()
   });
 
   it('clicks a bot and highlights it', () => {
     bot = document.querySelector('.bot')
     bot.click()
-    expect(bot.classList).toContain('highlight-player')
+    expect(document.querySelector('.bot').classList).toContain('highlight-player')
     container.remove()
   });
 

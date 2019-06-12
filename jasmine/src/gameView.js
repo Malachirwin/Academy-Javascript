@@ -13,13 +13,13 @@ class GameView {
 
   selectThePlayer(bot) {
     this._targetPlayer = bot.id
-    this.draw(document.getElementById('main'))
+    this.draw(this.container)
     this.displayButton()
   }
 
   selectTheCard(card) {
     this._targetCard = card.name
-    this.draw(document.getElementById('main'))
+    this.draw(this.container)
     this.displayButton()
   }
 
@@ -39,7 +39,7 @@ class GameView {
     this._targetPlayer = ""
     this._targetCard = ""
     this._showingButton = false
-    this.draw(document.getElementById('main'))
+    this.draw(this.container)
   }
 
   displayButton() {
@@ -55,11 +55,9 @@ class GameView {
   }
 
   draw(container) {
-    const temp = document.getElementById("temp")
-    if (temp !== null) { temp.remove() }
+    container.innerHTML = ''
     const div = document.createElement(`div`)
-    div.id = "temp"
-    const botDiv = document.createElement(`div`)
+    const botDiv = document.createElement('div')
     botDiv.classList.add('flex-container')
     this.game().players().forEach((player) => { if (this.game().players().indexOf(player) !== 0) { const bot = new BotView(player, this._targetPlayer); bot.draw(botDiv, this._targetPlayer) } })
     const markup = `
@@ -72,12 +70,12 @@ class GameView {
           <h1 class="player-name">${this.game().player().name()}</h1>
           <div class="hand">${this.cardHtml().join('')}</div>
         </div>
-      </div>
-    `
+      </div>`
     container.appendChild(div)
     div.innerHTML = markup
     document.querySelector('.Bots').appendChild(botDiv)
     this.addOnClick()
+    this.container = container
   }
 
   cardHtml() {
