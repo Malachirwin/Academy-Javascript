@@ -10,8 +10,8 @@ class GoFishController {
 
   startGame(name) {
     const game = new Game(name)
-    const view = new GameView(game)
-    view.draw(this.container())
+    const view = new GameView(game, this.container())
+    view.draw()
   }
 }
 window.controller = new GoFishController();

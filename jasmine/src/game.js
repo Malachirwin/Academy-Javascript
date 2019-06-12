@@ -26,6 +26,14 @@ class Game {
     return this.players()[0]
   }
 
+  book(request, result) {
+    if (result === "Go fish") {
+      return (`${request.playerWhoWasAsked} said ${result} to ${request.playerWhoAsked}`)
+    } else {
+      return (`${request.playerWhoAsked} took the ${result} from ${request.playerWhoWasAsked}`)
+    }
+  }
+
   playerSetHand(playerNumber, cards) {
     this.findPlayer(playerNumber).setHand(cards)
   }
