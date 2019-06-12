@@ -12,24 +12,14 @@ class GameView {
   }
 
   selectThePlayer(bot) {
-    const player = this.game().players()[bot.id]
-    if (document.querySelector('.highlight-player') !== null) {
-      document.querySelector('.highlight-player').classList.remove("highlight-player")
-    }
-    this._targetPlayer = player.name()
-    bot.classList.add("highlight-player")
+    this._targetPlayer = bot.id
+    this.draw(document.getElementById('main'))
     this.displayButton()
   }
 
   selectTheCard(card) {
-    document.querySelectorAll('.highlight').forEach((highLighted) => {
-      highLighted.classList.remove("highlight")
-    })
-    document.querySelectorAll('.card-in-hand').forEach((card2) => {
-      if (card2.name === card.name) { card2.classList.add("highlight") }
-    })
     this._targetCard = card.name
-    card.classList.add("highlight")
+    this.draw(document.getElementById('main'))
     this.displayButton()
   }
 
@@ -46,10 +36,10 @@ class GameView {
   }
 
   resetAndRender() {
-    this.draw(document.getElementById('main'))
     this._targetPlayer = ""
     this._targetCard = ""
     this._showingButton = false
+    this.draw(document.getElementById('main'))
   }
 
   displayButton() {
@@ -69,10 +59,13 @@ class GameView {
     if (temp !== null) { temp.remove() }
     const div = document.createElement(`div`)
     div.id = "temp"
+    const botDiv = document.createElement(`div`)
+    botDiv.classList.add('flex-container')
+    this.game().players().forEach((player) => { if (this.game().players().indexOf(player) !== 0) { const bot = new BotView(player, this._targetPlayer); bot.draw(botDiv, this._targetPlayer) } })
     const markup = `
       <div class="center">
         <h1>Go Fish</h1>
-        <div class="flex-container">${this.bots().join('')}</div>
+        <div class="Bots"></div>
         <div class="playing-space">${(this.game().deck().hasCards() === true) ? this.cardBack() : ""}</div>
         <div class="player-spot"> :
           <div class="log"><h4 class="book">Logs</h4>${this.logs().join('')}</div>
@@ -81,13 +74,20 @@ class GameView {
         </div>
       </div>
     `
-    div.innerHTML = markup
     container.appendChild(div)
+    div.innerHTML = markup
+    document.querySelector('.Bots').appendChild(botDiv)
     this.addOnClick()
   }
 
   cardHtml() {
-    return this.game().player().playerHand().map(card => `<img class="card-in-hand" src="${card.toImgPath()}" name="${card.rank()}"/>`)
+    return this.game().player().playerHand().map((card) => {
+      if (card.rank() === this._targetCard) { 
+        return `<img class="card-in-hand highlight" src="${card.toImgPath()}" name="${card.rank()}"/>` 
+      } else {
+        return `<img class="card-in-hand" src="${card.toImgPath()}" name="${card.rank()}"/>`
+      }
+    })
   }
 
   cardBack() {
