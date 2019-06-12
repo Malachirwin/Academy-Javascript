@@ -1,10 +1,10 @@
 class GameView {
-  constructor(game, container) {
+  constructor(game, theContainer) {
     this.game = game
     this._targetPlayer = ""
     this._targetCard = ""
     this._log = []
-    this.container = container
+    this.container = theContainer
   }
 
   selectThePlayer(bot) {

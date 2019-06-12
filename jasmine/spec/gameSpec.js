@@ -20,16 +20,16 @@ describe("Game", () => {
   })
 
   it('compares a card two a players hand and return true', () => {
-    game.playerSetHand(1, [new Card('3', 'H'), new Card('3', 'D'), new Card('7', 'H'), new Card('4', 'H'), new Card('2', 'S')])
-    game.playerSetHand(2, [new Card('3', 'H')])
+    player1.setHand([new Card('3', 'H'), new Card('3', 'D'), new Card('7', 'H'), new Card('4', 'H'), new Card('2', 'S')])
+    player2.setHand([new Card('3', 'H')])
     expect(game.cardInPlayerHand(player1, '3', player2)).toEqual("3 of Hearts, 3 of Diamonds")
     expect(player1.cardsLeft()).toEqual(3)
     expect(player2.cardsLeft()).toEqual(3)
   })
 
   it("compares a card two a players hand and return Go fish and player draws a card", () => {
-    game.playerSetHand(2, [new Card("3", 'H'), new Card('7', 'H'), new Card('4', 'H'), new Card('9', 'H'), new Card('6', 'D')])
-    game.playerSetHand(3, [new Card("J", "H")])
+    player2.setHand([new Card("3", 'H'), new Card('7', 'H'), new Card('4', 'H'), new Card('9', 'H'), new Card('6', 'D')])
+    player3.setHand([new Card("J", "H")])
     expect(game.cardInPlayerHand(player2, "J", player3)).toEqual("Go fish")
     expect(player2.cardsLeft()).toEqual(5)
     expect(player3.cardsLeft()).toEqual(2)
@@ -42,9 +42,9 @@ describe("Game", () => {
     player2.setHand([new Card('6', 'H'), new Card('6', 'S'), new Card('6', 'D'), new Card('6', 'C')])
     game.pair()
     game.removeAllCardsFromDeck()
-    game.playerSetHand(1, [])
-    game.playerSetHand(3, [])
-    game.playerSetHand(4, [])
+    player1.setHand([])
+    player3.setHand([])
+    player4.setHand([])
     expect(game.winner()).toEqual(`${player2.name()} had the most points with 2 points`)
   })
 

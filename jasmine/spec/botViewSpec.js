@@ -7,12 +7,17 @@ describe("BotView", () => {
     card3 = new Card("1", "H")
     card4 = new Card("1", "C")
     player = new Player('Malachi', [card1, card2, card3, card4])
-    view = new BotView(player)
-    view.draw(container)
+    view = new BotView(player, 'Malachi')
+    view.draw('malachi')
   })
 
   it("returns the bot html", () => {
-    expect(document.body.textContent).toContain('Malachi')
+    expect(view.draw('Malachi')).toContain('Malachi')
+    container.remove()
+  });
+
+  it("returns the bot highlighted bot if it is them html", () => {
+    expect(view.draw('Malachi')).toContain('highlight-player')
     container.remove()
   });
 });

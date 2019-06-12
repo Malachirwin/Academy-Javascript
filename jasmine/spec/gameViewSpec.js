@@ -4,8 +4,8 @@ describe('GameView', () => {
     container.id = "main"
     document.body.appendChild(container)
     game = new Game("Malachi")
-    view = new GameView(game)
-    view.draw(container)
+    view = new GameView(game, container)
+    view.draw()
   });
 
   it('gets the game html', () => {

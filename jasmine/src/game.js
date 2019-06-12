@@ -1,17 +1,11 @@
 class Game {
   constructor(name) {
-    this._players = []
     this._deck = new CardDeck()
     this._deck.shuffle()
-    this._playerTurn = 1
     const playersHands = this._deck.deal()
-    for (let i = 1; i < 5; i++) {
-      if (i === 1) {
-        this._players.push(new Player(name, playersHands[i - 1]))
-      } else {
-        this._players.push(new Player(Names.name(), playersHands[i - 1]))
-      }
-    }
+    this._players = [new Player(name, playersHands[0])]
+    this._playerTurn = 1
+    Array.from([1, 2, 3]).forEach((num) => { this._players.push(new Player(Names.name(), playersHands[num])) })
   }
 
   players() {
@@ -32,10 +26,6 @@ class Game {
     } else {
       return (`${request.playerWhoAsked} took the ${result} from ${request.playerWhoWasAsked}`)
     }
-  }
-
-  playerSetHand(playerNumber, cards) {
-    this.findPlayer(playerNumber).setHand(cards)
   }
 
   findPlayer(id) {
