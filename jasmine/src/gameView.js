@@ -3,7 +3,6 @@ class GameView {
     this._game = game
     this._targetPlayer = ""
     this._targetCard = ""
-    this._showingButton = false
     this._log = []
   }
 
@@ -38,28 +37,23 @@ class GameView {
   resetAndRender() {
     this._targetPlayer = ""
     this._targetCard = ""
-    this._showingButton = false
     this.draw(this.container)
   }
 
   displayButton() {
-    if (this._showingButton === false && this._targetCard !== "" && this._targetPlayer !== "") {
+    if (this._targetCard !== "" && this._targetPlayer !== "") {
       const div = document.createElement('div')
       const button = `<form><button type="Submit">Request</button></form>`
       div.onsubmit = this.play.bind(this)
       div.innerHTML = button
       const playerSpot = document.querySelector('.player-spot')
       playerSpot.appendChild(div)
-      this._showingButton = true
     }
   }
 
   draw(container) {
     container.innerHTML = ''
     const div = document.createElement(`div`)
-    const botDiv = document.createElement('div')
-    botDiv.classList.add('flex-container')
-    this.game().players().forEach((player) => { if (this.game().players().indexOf(player) !== 0) { const bot = new BotView(player, this._targetPlayer); bot.draw(botDiv, this._targetPlayer) } })
     const markup = `
       <div class="center">
         <h1>Go Fish</h1>
@@ -73,15 +67,27 @@ class GameView {
       </div>`
     container.appendChild(div)
     div.innerHTML = markup
-    document.querySelector('.Bots').appendChild(botDiv)
+    document.querySelector('.Bots').appendChild(this.botHtml())
     this.addOnClick()
     this.container = container
   }
 
+  botHtml() {
+    const botDiv = document.createElement('div')
+    botDiv.classList.add('flex-container')
+    this.game().players().forEach((player) => {
+      if (this.game().players().indexOf(player) !== 0) {
+        const bot = new BotView(player, this._targetPlayer);
+        bot.draw(botDiv, this._targetPlayer)
+      }
+    })
+    return botDiv
+  }
+
   cardHtml() {
     return this.game().player().playerHand().map((card) => {
-      if (card.rank() === this._targetCard) { 
-        return `<img class="card-in-hand highlight" src="${card.toImgPath()}" name="${card.rank()}"/>` 
+      if (card.rank() === this._targetCard) {
+        return `<img class="card-in-hand highlight" src="${card.toImgPath()}" name="${card.rank()}"/>`
       } else {
         return `<img class="card-in-hand" src="${card.toImgPath()}" name="${card.rank()}"/>`
       }
