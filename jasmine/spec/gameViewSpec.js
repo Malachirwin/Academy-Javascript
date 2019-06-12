@@ -1,20 +1,20 @@
 describe('GameView', () => {
-  it('gets the game html', () => {
-    const container = document.createElement('div')
+  beforeEach(() => {
+    container = document.createElement('div')
     document.body.appendChild(container)
-    function startGame(name) {
-      const game = new Game(name)
-      const view = new GameView(game)
-      view.draw(container)
-    }
-    const view = new LoginView(startGame);
-
-
+    game = new Game("Malachi")
+    view = new GameView(game)
     view.draw(container)
-    view.inputName().value = 'Malachi'
-    view.button().click()
+  });
 
+  it('gets the game html', () => {
     expect(document.body.textContent).toContain('Malachi')
+    container.remove()
+  });
+
+  it('gets the game html and makes 21 cards 20 in the four hands and 1 in the pile', () => {
+    const botCards = 5, playerCards = 5, centerPile = 1;
+    expect(document.querySelectorAll('img').length).toEqual((botCards * 3) + playerCards + centerPile)
     container.remove()
   });
 });

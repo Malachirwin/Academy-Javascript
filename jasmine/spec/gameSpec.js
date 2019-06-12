@@ -12,8 +12,8 @@ describe("Game", () => {
   })
 
   it("sees if a player has a match of four cards", () => {
-    player1.setHand([new Card('3', 'H'), new Card('4', 'S'), new Card('3', 'D'), new Card('3', 'C')])
-    player2.setHand([new Card('3', 'H'), new Card('4', 'S'), new Card('4', 'D'), new Card('4', 'C')])
+    player1.setHand([new Card('3', 'H'), new Card('3', 'S'), new Card('3', 'D'), new Card('3', 'C')])
+    player2.setHand([new Card('4', 'H'), new Card('4', 'S'), new Card('4', 'D'), new Card('4', 'C')])
     game.pair()
     expect(player1.cardsLeft()).toEqual(0)
     expect(player2.cardsLeft()).toEqual(0)
@@ -45,15 +45,15 @@ describe("Game", () => {
     game.playerSetHand(1, [])
     game.playerSetHand(3, [])
     game.playerSetHand(4, [])
-    expect(game.winner()).toContain(" had the most points with 2 points")
+    expect(game.winner()).toEqual(`${player2.name()} had the most points with 2 points`)
   })
 
-  // it("gives five cards to a player if they run out of cards", () => {
-  //   game.playerSetHand(4, [new Card('3', 'D')])
-  //   game.playerSetHand(3, [new Card('3', "H")])
-  //   playerRequest = new Request('player3', 'player4', 3)
-  //   expect(game.do_turn(playerRequest)).toEqual("3 of Hearts")
-  //   expect(player4.cardsLeft()).toEqual(5)
-  //   expect(player3.cardsLeft()).toEqual(2)
-  // })
+  it("gives five cards to a player if they run out of cards", () => {
+    player4.setHand([new Card('3', 'D')])
+    player3.setHand([new Card('3', "H")])
+    playerRequest = { playerWhoWasAsked: player4.name(), playerWhoAsked: player3.name(), desired_rank: '3' }
+    expect(game.doTurn(playerRequest)).toEqual("3 of Diamonds")
+    expect(player4.cardsLeft()).toEqual(5)
+    expect(player3.cardsLeft()).toEqual(2)
+  })
 })

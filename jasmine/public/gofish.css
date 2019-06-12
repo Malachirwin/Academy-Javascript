@@ -1,70 +1,9 @@
-/* .App {
-  /* text-align: center; */
-/* }
-
-.App-join {
-  text-align: center;
-} */
 .center {
   text-align: center;
 }
-/*.loader-container {
-  margin-left: 45%;
-} */
 
-/* .background-enter {
-  transform: translate(100%);
-}
-.background-enter.background-enter-active {
-  transform: translate(0%);
-  transition: transform 1000ms ease-in-out;
-}
-.background-leave {
-  transform: translate(0%);
-}
-.background-leave.background-leave-active {
-  transform: translate(-100%);
-  transition: transform 1000ms ease-in-out;
-}
-.loader {
-  margin-left: -50px;
-  border-top: 50px solid #dce800;
-  border-bottom: 50px solid #3ea826;
-  border-right: 50px solid #3b6ec6;
-  border-left: 50px solid #ff9000;
-  border-radius: 50%;
-  width: 1px;
-  height: 1px;
-  animation: spin 0.5s linear infinite;
-}
 
-p {
-  font-size: 30px;
-}
 
-.closser-to-gether {
-  margin-bottom: -30px;
-}
-
-.less-top-margin {
-  margin-top: -20px;
-}
-
-.further-from {
-  margin-top: 50px;
-}
-
-.less-top-margin {
-  margin-top: -20px;
-}
-
-.more-margin-bottom {
-  margin-bottom: 30px;
-}
-
-.book {
-  margin-top: -20px;
-}
 
 @keyframes spin {
     0% { transform: rotate(0deg); }
@@ -83,10 +22,6 @@ p {
   color: #442200;
   text-align: center;
 }
-
-.endGame {
-  text-align: center;
-} */
 
 .playing-space {
   text-align: center;
@@ -109,11 +44,12 @@ p {
   margin-left: -60px;
   width: 71px;
 }
-/*
+
 .highlight {
   border: 4px solid #227755;
   border-radius: 10px;
   margin-bottom: 10px;
+  padding: 2px;
 }
 .bot-name {
   margin-top: -5px;
@@ -125,13 +61,26 @@ p {
   border: 4px solid #227755;
   border-radius: 10px;
   padding: 10px;
-  margin-top: 30px;
-} */
+  /* margin-top: 30px; */
+}
 .player-hand {
   margin-left: -50px;
   width: 71px;
 }
-/*
+
+.log {
+  /* float: right; */
+  right: 0;
+  position: fixed;
+  text-align: center;
+  bottom: 0;
+  /* width: 100%; */
+}
+
+h4.book {
+  margin-top: -20px;
+}
+
 .center-cards {
   text-align: center;
   margin-bottom: 50px;
@@ -139,8 +88,7 @@ p {
 .center-cards img {
   width: 71px;
   margin-left: -68px;
-} */
-/*
+}
 .holder {
   margin-top: -15px;
   display: flex;
@@ -197,7 +145,7 @@ p {
 .match {
   width: 45px;
   margin-left: -37px;
-} */
+}
 
 .player-spot {
   text-align: center;
@@ -211,12 +159,16 @@ p {
 
 } */
 .flex-container {
+  justify-content: space-around;
   display: flex;
   flex-wrap: nowrap;
+  /* max-width: 400px; */
+  margin: 0 auto;
 }
 
 .bot {
   margin: 30px;
+
 }
 
 /* #playing_space {
@@ -239,9 +191,9 @@ p {
   margin-right: -40px;
   width: 71px;
   height: 96px;
-}
+} */
 
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
-} */
+}

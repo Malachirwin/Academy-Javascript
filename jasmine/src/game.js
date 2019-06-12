@@ -56,13 +56,15 @@ class Game {
             return `${results.join(", ")}`
           } else {
             this.nextTurn()
-            playerToGiveCards.addCards([this.deck().takeCard()])
+            const cardDrawn = this.deck().takeCard()
+            if (card !== undefined) {
+              playerToGiveCards.addCards([cardDrawn])
+            }
             return "Go fish"
           }
-        } else {
-          return "you can't ask that"
         }
       }
+      return "you can't ask that"
     } catch (err) {
       console.error(err)
       return "you can't ask that"
@@ -107,7 +109,7 @@ class Game {
     let highestScore = -1
     let winner = ""
     let tie = []
-    for (const player of this.players()) {
+    this.players().forEach((player) => {
       if (player.points() > highestScore) {
         highestScore = player.points()
         winner = player
@@ -116,7 +118,7 @@ class Game {
       } else if (player.points() === highestScore) {
         tie.push(player.name())
       }
-    }
+    })
     if (tie.length !== 1) {
       return `${tie.join(", ")} tied with ${highestScore} points`
     } else {
@@ -125,27 +127,50 @@ class Game {
   }
 
   pair() {
-    try {
-      for (const player of this.players()) {
-        const matches = []
-        for (const card of player.playerHand()) {
-          const valueOfCard = card.rank()
-          for (const deepCard of player.playerHand()) {
-            if (valueOfCard === deepCard.rank()) {
-              matches.push(deepCard)
-            }
-          }
-          if (matches.length === 4) {
-            player.match(matches)
-            for (const cardToDelete of matches) {
-              player.playerHand().splice(player.playerHand().indexOf(cardToDelete), 1)
-            }
-          }
-        }
-      }
-    } catch (err) {
-      console.error(err)
+    for (const player of this.players()) {
+      player.pairCards()
     }
+  }
+
+  noCards() {
+    if (this.deck().hasCards() === true) {
+      this.players().forEach((player) => {
+        if (player.cardsLeft() === 0) {
+          this.deck().refill(player)
+        }
+      })
+    }
+  }
+
+  findPlayerByName(name) {
+    let thePlayer
+    this.players().forEach((player) => {
+      if (player.name() === name) {
+        thePlayer = player
+      }
+    })
+    return thePlayer
+  }
+
+  doTurn(playerRequest) {
+    const playerWhoWasAsked = this.findPlayerByName(playerRequest.playerWhoWasAsked);
+    const playerWhoAsked = this.findPlayerByName(playerRequest.playerWhoAsked);
+    const result = this.cardInPlayerHand(playerWhoWasAsked, playerRequest.desired_rank, playerWhoAsked);
+    this.noCards();
+    this.players().forEach((player) => {
+      player.playerHand().forEach((card) => {
+        if (card === undefined) {
+          player.playerHand().splice(player.playerHand().indexOf(card), 1)
+        }
+      })
+    })
+    this.pair();
+
+    return result
+  }
+
+  playerWhoIsPlaying() {
+    return this.players()[this._playerTurn - 1]
   }
 
   deck() {

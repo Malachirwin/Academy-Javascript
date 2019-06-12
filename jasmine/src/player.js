@@ -21,6 +21,17 @@ class Player {
     return this._matches
   }
 
+  pairCards() {
+    this._cards.forEach((originalCard) => {
+      const sameRank = this._cards.filter(card => card.rank() === originalCard.rank())
+      if (sameRank.length === 4) {
+        this._matches.push(sameRank)
+        this._cards = this._cards.filter(card => !sameRank.includes(card))
+      }
+    })
+  }
+
+
   match(matches) {
     this._matches.push(matches)
   }
