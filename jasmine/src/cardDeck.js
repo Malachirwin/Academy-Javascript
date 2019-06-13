@@ -15,7 +15,7 @@ class CardDeck {
   }
 
   refill(player) {
-    player.addCards(this._cards.splice(0, 5))
+    player.addCards([this.takeCard(), this.takeCard(), this.takeCard(), this.takeCard(), this.takeCard()])
   }
 
   cards() {
@@ -23,7 +23,9 @@ class CardDeck {
   }
 
   takeCard() {
-    return this._cards.pop()
+    if (this.hasCards() === true) {
+      return this._cards.pop()
+    }
   }
 
   deal() {

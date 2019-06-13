@@ -31,6 +31,9 @@ class Player {
     })
   }
 
+  removeCardsByRank(rank) {
+    this._cards = this._cards.filter(card => !(card.rank() === rank))
+  }
 
   match(matches) {
     this._matches.push(matches)

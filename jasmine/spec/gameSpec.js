@@ -45,7 +45,7 @@ describe("Game", () => {
     player1.setHand([])
     player3.setHand([])
     player4.setHand([])
-    expect(game.winner()).toEqual(`${player2.name()} had the most points with 2 points`)
+    expect(JSON.stringify(game.winner())).toEqual(JSON.stringify([player2, player4, player3, player1]))
   })
 
   it("gives five cards to a player if they run out of cards", () => {

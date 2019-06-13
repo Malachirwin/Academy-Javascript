@@ -10,15 +10,18 @@ class LoginView {
 
   draw(container) {
     const div = document.createElement(`div`)
-    const markup = `<form>
+    div.innerHTML = this.markup()
+    div.setAttribute('id', 'login')
+    div.onsubmit = this.onSubmit.bind(this)
+    container.appendChild(div)
+  }
+
+  markup() {
+    return `<form>
       <label for="name">name:</label>
       <input id="name" type="text" name="name" value="" placeholder="Example">
       <button type="submit" name="Play">Play</button>
     </form>`
-    div.innerHTML = markup
-    div.setAttribute('id', 'login')
-    div.onsubmit = this.onSubmit.bind(this)
-    container.appendChild(div)
   }
 
   inputName(name) {

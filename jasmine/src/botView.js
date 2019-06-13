@@ -6,22 +6,22 @@ class BotView {
 
   draw(botName) {
     if (botName === this._player.name()) {
-      return `<div id=${this._player.name()} class="bot highlight-player">
-        <h3>${this._player.name()}</h3>
-        <div class="hand">${this._player.playerHand().map(card => this.cardBack()).join('')}</div>
-        <div class="matchesWrapper">${this.matchHtml()}</div>
-      </div>`
+      return this.html('bot highlight-player')
     } else {
-      return `<div id=${this._player.name()} class="bot">
-        <h3>${this._player.name()}</h3>
-        <div class="hand">${this._player.playerHand().map(card => this.cardBack()).join('')}</div>
-        <div class="matchesWrapper">${this.matchHtml()}</div>
-      </div>`
+      return this.html('bot')
     }
   }
 
   cardBack() {
     return `<img class="card-back" src="public/cards/backs_custom.jpg"/>`
+  }
+
+  html(classes) {
+    return `<div id=${this._player.name()} class="${classes}">
+        <h3>${this._player.name()}</h3>
+        <div class="hand">${this._player.playerHand().map(card => this.cardBack()).join('')}</div>
+        <div class="matchesWrapper">${this.matchHtml()}</div>
+      </div>`
   }
 
   matchHtml() {

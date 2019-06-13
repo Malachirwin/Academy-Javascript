@@ -33,35 +33,30 @@ class Game {
   }
 
   cardInPlayerHand(playerToAsk, rank, playerToGiveCards) {
-    const cardsFromPlayer = []
-    const cardsToRemove = []
-    const results = []
-    for (const card of playerToGiveCards.playerHand()) {
-      if (rank.toString() === card.rank()) {
-        for (const cardFromPlayer of playerToAsk.playerHand()) {
-          if (rank.toString() === cardFromPlayer.rank()) {
-            cardsFromPlayer.push(cardFromPlayer)
-            cardsToRemove.push(cardFromPlayer)
-            results.push(cardFromPlayer.value())
-          }
-        }
-        for (const cardToDelete of cardsToRemove) {
-          playerToAsk.playerHand().splice(playerToAsk.playerHand().indexOf(cardToDelete), 1)
-        }
-        playerToGiveCards.addCards(cardsFromPlayer)
-        if (results.length !== 0) {
-          return `${results.join(", ")}`
-        } else {
-          this.nextTurn()
-          const cardDrawn = this.deck().takeCard()
-          if (card !== undefined) {
-            playerToGiveCards.addCards([cardDrawn])
-          }
-          return "Go fish"
-        }
-      }
+    if (playerToGiveCards.playerHand().filter(card => card.rank() === rank).length > 0) {
+      const cards = playerToAsk.playerHand().filter(card => card.rank() === rank)
+      const results = this.playerFindCard(cards, playerToAsk, playerToGiveCards, rank)
+      return this.returnValue(results, playerToGiveCards)
     }
-    return "you can't ask that"
+  }
+
+  returnValue(results, playerToGiveCards) {
+    if (results.length !== 0) {
+      return `${results.join(", ")}`
+    } else {
+      this.nextTurn()
+      this.takeCard(playerToGiveCards)
+      return "Go fish"
+    }
+  }
+
+  playerFindCard(cards, playerToAsk, playerToGiveCards, rank) {
+    if (cards.length > 0) {
+      playerToAsk.removeCardsByRank(rank)
+      playerToGiveCards.addCards(cards)
+      return cards.map(card => card.value())
+    }
+    return []
   }
 
   nextTurn() {
@@ -73,44 +68,45 @@ class Game {
   }
 
   winner() {
-    const result = []
-    if (this.deck().hasCards() === false) {
-      for (const player of this.players()) {
-        if (player.cardsLeft() === 0) {
-          result.push(true)
-        } else {
-          result.push(false)
-        }
-      }
-    }
-    const compareToResult = []
-    for (let i = 0; i < this.players().length; i++) {
-      compareToResult.push(true)
-    }
-    if (JSON.stringify(result) === JSON.stringify(compareToResult)) {
+    if (this.noCardsLeftInGame() === true) {
       return this.gameEnd()
-    } else {
-      return false
     }
+    return false
+  }
+
+  noCardsLeftInGame() {
+    return (this.players().map(pl => pl.cardsLeft() === 0).filter(boolean => boolean === true).length === 4 && this.deck().hasCards() === false)
   }
 
   botTurns() {
     const results = []
-    while (this.playerWhoIsPlaying() !== this.player() && this.player().cardsLeft() >= 0) {
-      const player = this.playerWhoIsPlaying()
-      if (player.cardsLeft() > 0) {
-        let playerToAsk = this.players()[Math.floor(Math.random() * this.players().length)]
-        while (playerToAsk === player && playerToAsk.cardsLeft() > 0) {
-          playerToAsk = this.players()[Math.floor(Math.random() * this.players().length)]
-        }
-        const cardToAsk = player.playerHand()[Math.floor(Math.random() * player.playerHand().length)]
-        const playerRequest = { playerWhoWasAsked: playerToAsk.name(), playerWhoAsked: player.name(), desired_rank: cardToAsk.rank() }
-        results.push(this.book(playerRequest, this.doTurn(playerRequest)))
-      } else {
-        this.nextTurn()
-      }
+    while (this.playerWhoIsPlaying() !== this.player() && this.player().cardsLeft() > 0) {
+      results.push(this.botTurn())
     }
     return results
+  }
+
+  botTurn() {
+    if (this.playerWhoIsPlaying().cardsLeft() > 0) {
+      return this.botRequest(this.playerWhoIsPlaying())
+    } else {
+      this.nextTurn()
+    }
+  }
+
+  botRequest(player) {
+    const playerToAsk = this.randomPlayer()
+    const cardToAsk = player.playerHand()[Math.floor(Math.random() * player.playerHand().length)]
+    const playerRequest = { playerWhoWasAsked: playerToAsk.name(), playerWhoAsked: player.name(), desired_rank: cardToAsk.rank() }
+    return this.book(playerRequest, this.doTurn(playerRequest))
+  }
+
+  randomPlayer() {
+    let playerToAsk = this.players()[Math.floor(Math.random() * this.players().length)]
+    while (playerToAsk === this.playerWhoIsPlaying() && playerToAsk.cardsLeft() > 0) {
+      playerToAsk = this.players()[Math.floor(Math.random() * this.players().length)]
+    }
+    return playerToAsk
   }
 
   removeAllCardsFromDeck() {
@@ -118,27 +114,14 @@ class Game {
   }
 
   gameEnd() {
-    let highestScore = -1
-    let winner = ""
-    let tie = []
-    this.players().forEach((player) => {
-      if (player.points() > highestScore) {
-        highestScore = player.points()
-        winner = player
-        tie = []
-        tie.push(winner.name())
-      } else if (player.points() === highestScore) {
-        tie.push(player.name())
-      }
-    })
-    if (tie.length !== 1) {
-      if (tie.length === 2) {
-        return `${tie.join(" and ")} tied with ${highestScore} points`
-      } else {
-        return `${tie.join(", ")} tied with ${highestScore} points`
-      }
-    } else {
-      return `${winner.name()} had the most points with ${highestScore} points`
+    const players = this.players().slice()
+    return players.sort((pl, pl2) => pl.points() - pl2.points()).reverse();
+  }
+
+  takeCard(player) {
+    const card = this.deck().takeCard()
+    if (card) {
+      player.addCards([card])
     }
   }
 
@@ -150,38 +133,22 @@ class Game {
 
   noCards() {
     if (this.deck().hasCards() === true) {
-      this.players().forEach((player) => {
-        if (player.cardsLeft() === 0) {
-          this.deck().refill(player)
-        }
+      this.players().filter(pl => pl.cardsLeft() === 0).forEach((player) => {
+        this.deck().refill(player)
       })
     }
   }
 
   findPlayerByName(name) {
-    let thePlayer
-    this.players().forEach((player) => {
-      if (player.name() === name) {
-        thePlayer = player
-      }
-    })
-    return thePlayer
+    return this.players().filter(pl => pl.name() === name)[0]
   }
 
   doTurn(playerRequest) {
     const playerWhoWasAsked = this.findPlayerByName(playerRequest.playerWhoWasAsked);
     const playerWhoAsked = this.findPlayerByName(playerRequest.playerWhoAsked);
     const result = this.cardInPlayerHand(playerWhoWasAsked, playerRequest.desired_rank, playerWhoAsked);
-    this.noCards();
-    this.players().forEach((player) => {
-      player.playerHand().forEach((card) => {
-        if (card === undefined) {
-          player.playerHand().splice(player.playerHand().indexOf(card), 1)
-        }
-      })
-    })
     this.pair();
-
+    this.noCards();
     return result
   }
 
