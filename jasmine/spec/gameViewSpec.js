@@ -50,4 +50,11 @@ describe('GameView', () => {
     expect(document.body.textContent).toContain('Log')
     container.remove()
   });
+
+  it('Have Matches', () => {
+    game.player().match([new Card("A", "C"), new Card("A", "H"), new Card("A", "D"), new Card("A", "S")])
+    view.draw()
+    expect(document.querySelectorAll('.matches').length).toEqual(1)
+    container.remove()
+  })
 });

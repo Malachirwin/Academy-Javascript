@@ -33,40 +33,35 @@ class Game {
   }
 
   cardInPlayerHand(playerToAsk, rank, playerToGiveCards) {
-    try {
-      const cardsFromPlayer = []
-      const cardsToRemove = []
-      const results = []
-      for (const card of playerToGiveCards.playerHand()) {
-        if (rank.toString() === card.rank()) {
-          for (const cardFromPlayer of playerToAsk.playerHand()) {
-            if (rank.toString() === cardFromPlayer.rank()) {
-              cardsFromPlayer.push(cardFromPlayer)
-              cardsToRemove.push(cardFromPlayer)
-              results.push(cardFromPlayer.value())
-            }
-          }
-          for (const cardToDelete of cardsToRemove) {
-            playerToAsk.playerHand().splice(playerToAsk.playerHand().indexOf(cardToDelete), 1)
-          }
-          playerToGiveCards.addCards(cardsFromPlayer)
-          if (results.length !== 0) {
-            return `${results.join(", ")}`
-          } else {
-            this.nextTurn()
-            const cardDrawn = this.deck().takeCard()
-            if (card !== undefined) {
-              playerToGiveCards.addCards([cardDrawn])
-            }
-            return "Go fish"
+    const cardsFromPlayer = []
+    const cardsToRemove = []
+    const results = []
+    for (const card of playerToGiveCards.playerHand()) {
+      if (rank.toString() === card.rank()) {
+        for (const cardFromPlayer of playerToAsk.playerHand()) {
+          if (rank.toString() === cardFromPlayer.rank()) {
+            cardsFromPlayer.push(cardFromPlayer)
+            cardsToRemove.push(cardFromPlayer)
+            results.push(cardFromPlayer.value())
           }
         }
+        for (const cardToDelete of cardsToRemove) {
+          playerToAsk.playerHand().splice(playerToAsk.playerHand().indexOf(cardToDelete), 1)
+        }
+        playerToGiveCards.addCards(cardsFromPlayer)
+        if (results.length !== 0) {
+          return `${results.join(", ")}`
+        } else {
+          this.nextTurn()
+          const cardDrawn = this.deck().takeCard()
+          if (card !== undefined) {
+            playerToGiveCards.addCards([cardDrawn])
+          }
+          return "Go fish"
+        }
       }
-      return "you can't ask that"
-    } catch (err) {
-      console.error(err)
-      return "you can't ask that"
     }
+    return "you can't ask that"
   }
 
   nextTurn() {
@@ -99,6 +94,25 @@ class Game {
     }
   }
 
+  botTurns() {
+    const results = []
+    while (this.playerWhoIsPlaying() !== this.player() && this.player().cardsLeft() >= 0) {
+      const player = this.playerWhoIsPlaying()
+      if (player.cardsLeft() > 0) {
+        let playerToAsk = this.players()[Math.floor(Math.random() * this.players().length)]
+        while (playerToAsk === player && playerToAsk.cardsLeft() > 0) {
+          playerToAsk = this.players()[Math.floor(Math.random() * this.players().length)]
+        }
+        const cardToAsk = player.playerHand()[Math.floor(Math.random() * player.playerHand().length)]
+        const playerRequest = { playerWhoWasAsked: playerToAsk.name(), playerWhoAsked: player.name(), desired_rank: cardToAsk.rank() }
+        results.push(this.book(playerRequest, this.doTurn(playerRequest)))
+      } else {
+        this.nextTurn()
+      }
+    }
+    return results
+  }
+
   removeAllCardsFromDeck() {
     this._deck.removeAllCardsFromDeck()
   }
@@ -118,7 +132,11 @@ class Game {
       }
     })
     if (tie.length !== 1) {
-      return `${tie.join(", ")} tied with ${highestScore} points`
+      if (tie.length === 2) {
+        return `${tie.join(" and ")} tied with ${highestScore} points`
+      } else {
+        return `${tie.join(", ")} tied with ${highestScore} points`
+      }
     } else {
       return `${winner.name()} had the most points with ${highestScore} points`
     }

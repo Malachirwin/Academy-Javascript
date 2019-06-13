@@ -20,10 +20,10 @@ describe('Player', () => {
   });
 
   it("has matches", () => {
-    const card1 = new Card("1", "S")
-    const card2 = new Card("1", "D")
-    const card3 = new Card("1", "H")
-    const card4 = new Card("1", "C")
+    const card1 = new Card("A", "S")
+    const card2 = new Card("A", "D")
+    const card3 = new Card("A", "H")
+    const card4 = new Card("A", "C")
     const player = new Player('Malachi', [card1, card2, card3, card4])
     expect(player.matches()).toEqual([])
     expect(player.points()).toEqual(0)

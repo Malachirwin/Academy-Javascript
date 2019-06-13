@@ -31,7 +31,7 @@
   margin-left: 50px;
 }
 .card-back {
-  margin-left: -50px;
+  margin-left: -57px;
   width: 71px;
 }
 
@@ -98,7 +98,7 @@ h4.book {
 
 .bot {
   text-align: center;
-  width : 190px;
+  /* width : 190px; */
   margin: 0 20px 10px 20px;
   display : inline-block;
 }
@@ -113,8 +113,8 @@ h4.book {
 
 .log {
   background-color: lightgrey;
-  float: bottom;
-  float: right;
+  /* float: bottom; */
+  /* float: right; */
   margin-right: 40px;
   margin-bottom: 40px;
   margin-top: -350px;
@@ -163,12 +163,11 @@ h4.book {
   display: flex;
   flex-wrap: nowrap;
   /* max-width: 400px; */
-  margin: 0 auto;
+  /* margin: 0 auto; */
 }
 
 .bot {
   margin: 30px;
-
 }
 
 /* #playing_space {
