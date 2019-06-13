@@ -11,13 +11,15 @@ describe("BotView", () => {
     view.draw('malachi')
   })
 
+  afterEach(() => {
+    container.remove()
+  })
+
   it("returns the bot html", () => {
     expect(view.draw('Malachi')).toContain('Malachi')
-    container.remove()
   });
 
   it("returns the bot highlighted bot if it is them html", () => {
     expect(view.draw('Malachi')).toContain('highlight-player')
-    container.remove()
   });
 });

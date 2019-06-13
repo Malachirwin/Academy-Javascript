@@ -80,7 +80,7 @@ class Game {
 
   botTurns() {
     const results = []
-    while (this.playerWhoIsPlaying() !== this.player() && this.player().cardsLeft() > 0) {
+    while (this.playerWhoIsPlaying() !== this.player() && this.player().cardsLeft() >= 0) {
       results.push(this.botTurn())
     }
     return results

@@ -8,29 +8,29 @@ describe('GameView', () => {
     view.draw()
   });
 
+  afterEach(() => {
+    container.remove()
+  })
+
   it('gets the game html', () => {
     expect(document.body.textContent).toContain('Malachi')
-    container.remove()
   });
 
   it('gets the game html and makes 21 cards 20 in the four hands and 1 in the pile', () => {
     const botCards = 5, playerCards = 5, centerPile = 1;
     expect(document.querySelectorAll('img').length).toEqual((botCards * 3) + playerCards + centerPile)
-    container.remove()
   });
 
   it('clicks a card and highlights it', () => {
     card = document.querySelector('.card-in-hand')
     card.click()
     expect(document.querySelector('.card-in-hand').classList).toContain('highlight')
-    container.remove()
   });
 
   it('clicks a bot and highlights it', () => {
     bot = document.querySelector('.bot')
     bot.click()
     expect(document.querySelector('.bot').classList).toContain('highlight-player')
-    container.remove()
   });
 
   it("requests a card", () => {
@@ -48,18 +48,15 @@ describe('GameView', () => {
     button.click()
     expect(document.querySelector('button')).toEqual(null)
     expect(document.querySelectorAll('.card-in-hand').length).toBeGreaterThan(numberOfCardsInHandBefore)
-    container.remove()
   });
 
   it("has a game log", () => {
     expect(document.body.textContent).toContain('Log')
-    container.remove()
   });
 
   it('Have Matches', () => {
     game.player().match([new Card("A", "C"), new Card("A", "H"), new Card("A", "D"), new Card("A", "S")])
     view.draw()
     expect(document.querySelectorAll('.matches').length).toEqual(1)
-    container.remove()
   })
 });

@@ -15,7 +15,11 @@ class CardDeck {
   }
 
   refill(player) {
-    player.addCards([this.takeCard(), this.takeCard(), this.takeCard(), this.takeCard(), this.takeCard()])
+    [1, 2, 3, 4, 5].forEach((num) => {
+      card = this.takeCard()
+      player.addCards([])
+      if (card) { player.addCards([card]) }
+    })
   }
 
   cards() {

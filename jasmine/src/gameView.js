@@ -6,14 +6,6 @@ class GameView {
     this._targetCard = ""
     this._log = []
     this.container = theContainer
-    this.game.player().setHand([new Card('3', 'H'), new Card('3', 'S'), new Card('3', 'D'), new Card('3', 'C')])
-    this.game.pair()
-    this.game.player().setHand([new Card('6', 'H'), new Card('6', 'S'), new Card('6', 'D'), new Card('6', 'C')])
-    this.game.pair()
-    this.game.removeAllCardsFromDeck()
-    this.game.players()[1].setHand([])
-    this.game.players()[2].setHand([])
-    this.game.players()[3].setHand([])
   }
 
   selectThePlayer(bot) {
@@ -96,10 +88,10 @@ class GameView {
   }
 
   skipPlayer() {
-    // this.game.nextTurn()
-    // this._log.unshift(...this.game.botTurns())
-    // this.container.innerHTML = ''
-    // this.draw()
+    this.game.nextTurn()
+    this._log.unshift(...this.game.botTurns())
+    this.container.innerHTML = ''
+    this.draw()
   }
 
   cardHtml() {

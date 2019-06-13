@@ -3,9 +3,11 @@ class EndGameView {
     this.game = game
     this.onload = onload
     this.container = container
+    this.container.innerHTML = ''
   }
 
   draw(container) {
+    this.container.innerHTML = ''
     const div = document.createElement(`div`)
     div.classList.add('center')
     container.appendChild(div)
