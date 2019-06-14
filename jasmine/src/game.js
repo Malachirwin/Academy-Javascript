@@ -8,28 +8,13 @@ class Game {
     Array.from([1, 2, 3]).forEach((num) => { this._players.push(new Player(Names.name(), playersHands[num])) })
   }
 
-  players() {
-    return this._players
-  }
-
-  playerTurn() {
-    return this._playerTurn
-  }
-
-  player() {
-    return this.players()[0]
-  }
-
-  book(request, result) {
-    if (result === "Go fish") {
-      return (`${request.playerWhoAsked} asked ${request.playerWhoWasAsked} for ${new Card(request.desired_rank, 'suit').rankValue()} and went fishing`)
-    } else {
-      return (`${request.playerWhoAsked} took the ${result} from ${request.playerWhoWasAsked}`)
-    }
-  }
-
-  findPlayer(id) {
-    return this.players()[id - 1]
+  doTurn(playerRequest) {
+    const playerWhoWasAsked = this.findPlayerByName(playerRequest.playerWhoWasAsked);
+    const playerWhoAsked = this.findPlayerByName(playerRequest.playerWhoAsked);
+    const result = this.cardInPlayerHand(playerWhoWasAsked, playerRequest.desired_rank, playerWhoAsked);
+    this.pair();
+    this.noCards();
+    return result
   }
 
   cardInPlayerHand(playerToAsk, rank, playerToGiveCards) {
@@ -57,25 +42,6 @@ class Game {
       return cards.map(card => card.value())
     }
     return []
-  }
-
-  nextTurn() {
-    if (this.playerTurn() === this.players().length) {
-      this._playerTurn = 1
-    } else {
-      this._playerTurn += 1
-    }
-  }
-
-  winner() {
-    if (this.noCardsLeftInGame() === true) {
-      return this.gameEnd()
-    }
-    return false
-  }
-
-  noCardsLeftInGame() {
-    return (this.players().map(pl => pl.cardsLeft() === 0).filter(boolean => boolean === true).length === 4 && this.deck().hasCards() === false)
   }
 
   botTurns() {
@@ -110,26 +76,10 @@ class Game {
     return playerToAsk
   }
 
-  removeAllCardsFromDeck() {
-    this._deck.removeAllCardsFromDeck()
-  }
-
-  gameEnd() {
-    const players = this.players().slice()
-    return players.reverse().sort((pl, pl2) => pl.points() - pl2.points()).reverse();
-  }
-
-  takeCard(player) {
-    const card = this.deck().takeCard()
-    if (card) {
-      player.addCards([card])
-    }
-  }
-
   pair() {
-    for (const player of this.players()) {
+    this.players().forEach((player) => {
       player.pairCards()
-    }
+    })
   }
 
   noCards() {
@@ -140,17 +90,59 @@ class Game {
     }
   }
 
-  findPlayerByName(name) {
-    return this.players().filter(pl => pl.name() === name)[0]
+  book(request, result) {
+    if (result === "Go fish") {
+      return (`${request.playerWhoAsked} asked ${request.playerWhoWasAsked} for ${new Card(request.desired_rank, 'suit').rankValue()} and went fishing`)
+    } else {
+      return (`${request.playerWhoAsked} took the ${result} from ${request.playerWhoWasAsked}`)
+    }
   }
 
-  doTurn(playerRequest) {
-    const playerWhoWasAsked = this.findPlayerByName(playerRequest.playerWhoWasAsked);
-    const playerWhoAsked = this.findPlayerByName(playerRequest.playerWhoAsked);
-    const result = this.cardInPlayerHand(playerWhoWasAsked, playerRequest.desired_rank, playerWhoAsked);
-    this.pair();
-    this.noCards();
-    return result
+  nextTurn() {
+    if (this.playerTurn() === this.players().length) {
+      this._playerTurn = 1
+    } else {
+      this._playerTurn += 1
+    }
+  }
+
+  takeCard(player) {
+    const card = this.deck().takeCard()
+    if (card) {
+      player.addCards([card])
+    }
+  }
+
+  winner() {
+    if (this.noCardsLeftInGame() === true) {
+      const players = this.players().slice()
+      return players.reverse().sort((pl, pl2) => pl.points() - pl2.points()).reverse();
+    }
+    return false
+  }
+
+  noCardsLeftInGame() {
+    return (this.players().map(pl => pl.cardsLeft() === 0).filter(boolean => boolean === true).length === 4 && this.deck().hasCards() === false)
+  }
+
+  findPlayer(id) {
+    return this.players()[id - 1]
+  }
+
+  players() {
+    return this._players
+  }
+
+  playerTurn() {
+    return this._playerTurn
+  }
+
+  player() {
+    return this.players()[0]
+  }
+
+  findPlayerByName(name) {
+    return this.players().filter(pl => pl.name() === name)[0]
   }
 
   playerWhoIsPlaying() {

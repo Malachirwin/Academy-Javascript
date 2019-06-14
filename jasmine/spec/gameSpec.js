@@ -41,7 +41,7 @@ describe("Game", () => {
     game.pair()
     player2.setHand([new Card('6', 'H'), new Card('6', 'S'), new Card('6', 'D'), new Card('6', 'C')])
     game.pair()
-    game.removeAllCardsFromDeck()
+    game.deck().removeAllCardsFromDeck()
     player1.setHand([])
     player3.setHand([])
     player4.setHand([])

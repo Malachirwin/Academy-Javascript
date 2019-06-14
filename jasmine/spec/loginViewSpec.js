@@ -7,8 +7,8 @@ describe('LoginView', () => {
     document.body.appendChild(container)
 
     view.draw(container)
-    view.inputName().value = 'Malachi'
-    view.button().click()
+    document.getElementById('name').value = 'Malachi'
+    document.querySelector('button').click()
 
     expect(userName).toEqual('Malachi')
     container.remove()

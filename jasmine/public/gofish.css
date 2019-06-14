@@ -33,9 +33,13 @@ label {
   font-size: 3rem;
 }
 
+form {
+  margin-top: 1rem;
+}
+
 .App-header {
   background-color: hsl(197, 100%, 17%);
-  height: 150px;
+  height: 50px;
   padding: 20px;
   color: hsl(106, 100%, 26%);
   text-align: center;

@@ -32,7 +32,7 @@ class PlayerView {
     }).join('')
   }
 
-  matchHtml(game) {
+  matchHtml() {
     return this.game.player().matches().map(match => `<div class="matches inbetween-match">${match.map(card => `<img class="match" src="${card.toImgPath()}" name="${card.rank()}"/>`).join('')}</div>`).join('')
   }
 

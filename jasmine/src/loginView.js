@@ -40,12 +40,4 @@ class LoginView {
     }
     return ''
   }
-
-  inputName(name) {
-    return document.getElementById('name')
-  }
-
-  button() {
-    return document.querySelector('button')
-  }
 }

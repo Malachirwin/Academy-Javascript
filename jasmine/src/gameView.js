@@ -67,6 +67,7 @@ class GameView {
   }
 
   botHtml() {
+    // eslint-disable-next-line array-callback-return
     return this.game.players().map((player) => {
       if (this.game.players().indexOf(player) !== 0) {
         const bot = new BotView(player, this._targetPlayer);

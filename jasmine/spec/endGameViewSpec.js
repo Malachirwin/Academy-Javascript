@@ -6,7 +6,7 @@ describe('EndGameView', () => {
     game.player().setHand([new Card('6', 'H'), new Card('6', 'S'), new Card('6', 'D'), new Card('6', 'C'), new Card('3', 'H'), new Card('3', 'S'), new Card('3', 'D'), new Card('3', 'C')])
     game.players()[1].setHand([new Card('6', 'H'), new Card('6', 'S'), new Card('6', 'D'), new Card('6', 'C')])
     game.pair()
-    game.removeAllCardsFromDeck()
+    game.deck().removeAllCardsFromDeck()
     game.players()[2].setHand([])
     game.players()[3].setHand([])
     function callBack() {
