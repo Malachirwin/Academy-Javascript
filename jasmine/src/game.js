@@ -5,6 +5,7 @@ class Game {
     const playersHands = this._deck.deal()
     this._players = [new Player(name, playersHands[0])]
     this._playerTurn = 1
+    this._log = []
     Array.from([1, 2, 3]).forEach((num) => { this._players.push(new Player(Names.name(), playersHands[num])) })
   }
 
@@ -14,6 +15,7 @@ class Game {
     const result = this.cardInPlayerHand(playerWhoWasAsked, playerRequest.desired_rank, playerWhoAsked);
     this.pair();
     this.noCards();
+    this._log.unshift(this.book(playerRequest, result))
     return result
   }
 
@@ -47,7 +49,7 @@ class Game {
   botTurns() {
     const results = []
     while (this.playerWhoIsPlaying() !== this.player() && this.player().cardsLeft() >= 0) {
-      results.push(this.botTurn())
+      this.botTurn()
     }
     return results
   }
@@ -57,13 +59,12 @@ class Game {
       return this.botRequest(this.playerWhoIsPlaying())
     } else {
       this.nextTurn()
-      return `${this.playerWhoIsPlaying().name()} is out of cards`
+      this._log.unshift(`${this.playerWhoIsPlaying().name()} is out of cards`)
     }
   }
 
   botRequest(player) {
-    const playerToAsk = this.randomPlayer()
-    const cardToAsk = player.playerHand()[Math.floor(Math.random() * player.playerHand().length)]
+    const [cardToAsk, playerToAsk] = this.randomCardandPlayer(player)
     const playerRequest = { playerWhoWasAsked: playerToAsk.name(), playerWhoAsked: player.name(), desired_rank: cardToAsk.rank() }
     return this.book(playerRequest, this.doTurn(playerRequest))
   }
@@ -74,6 +75,10 @@ class Game {
       playerToAsk = this.players()[Math.floor(Math.random() * this.players().length)]
     }
     return playerToAsk
+  }
+
+  randomCardandPlayer(player) {
+    return [player.playerHand()[Math.floor(Math.random() * player.playerHand().length)], this.randomPlayer()]
   }
 
   pair() {
@@ -151,5 +156,9 @@ class Game {
 
   deck() {
     return this._deck
+  }
+
+  log() {
+    return this._log
   }
 }

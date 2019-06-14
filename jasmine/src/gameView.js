@@ -4,7 +4,6 @@ class GameView {
     this._onload = onload
     this._targetPlayer = ""
     this._targetCard = ""
-    this._log = []
     this.container = theContainer
   }
 
@@ -21,8 +20,8 @@ class GameView {
   play(event) {
     event.preventDefault()
     const request = { playerWhoWasAsked: this._targetPlayer, playerWhoAsked: this.game.player().name(), desired_rank: this._targetCard }
-    this._log.unshift(this.game.book(request, this.game.doTurn(request)))
-    this._log.unshift(...this.game.botTurns())
+    this.game.doTurn(request)
+    this.game.botTurns()
     this.resetAndRender()
   }
 
@@ -63,7 +62,7 @@ class GameView {
   gameHtml() {
     return `<div class="flex-container">${this.botHtml()}</div>
     <div class="playing-space">${(this.game.deck().hasCards() === true) ? `<img class="card-back" src="public/cards/backs_custom.jpg"/>` : ""}</div>
-    ${new PlayerView(this._log, this.game, this.skipPlayer.bind(this.game), this._targetCard).playerHtml()}`
+    ${new PlayerView(this.game, this.skipPlayer.bind(this), this._targetCard).playerHtml()}`
   }
 
   botHtml() {
@@ -78,7 +77,7 @@ class GameView {
 
   skipPlayer() {
     this.game.nextTurn()
-    this._log.unshift(...this.game.botTurns())
+    this.game.botTurns()
     this.container.innerHTML = ''
     this.draw()
   }

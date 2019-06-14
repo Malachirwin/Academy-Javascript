@@ -1,6 +1,5 @@
 class PlayerView {
-  constructor(logs, game, skipPlayer, targetCard) {
-    this._log = logs
+  constructor(game, skipPlayer, targetCard) {
     this.game = game
     this._targetCard = targetCard
     this.skipPlayerFunction = skipPlayer
@@ -37,6 +36,6 @@ class PlayerView {
   }
 
   logs() {
-    return this._log.slice(0, 20).map(log => `<h4 class="book">${log}</h4>`).join('')
+    return this.game.log().slice(0, 20).map(log => `<h4 class="book">${log}</h4>`).join('')
   }
 }
