@@ -26,9 +26,7 @@ class EndGameView {
     const players = this.game.winner()
     const winners = players.filter(player => players[0].points() === player.points())
     const others = players.filter(pl => !winners.includes(pl))
-    return [this.winnerClanHtml(winners), others.map((pl) => {
-      return `<h3>${pl.name()} had ${pl.points()} point(s)</h3>`
-    }).join('')].join('')
+    return [this.winnerClanHtml(winners), others.map(pl => `<h3>${pl.name()} had ${pl.points()} point(s)</h3>`).join('')].join('')
   }
 
   winnerClanHtml(players) {
