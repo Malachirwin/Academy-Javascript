@@ -1,9 +1,13 @@
 .center {
   text-align: center;
 }
+body {
+  background-color: hsl(106, 100%, 26%);
+}
 
-
-
+.error {
+  color: rgb(184, 0, 0);
+}
 
 @keyframes spin {
     0% { transform: rotate(0deg); }
@@ -11,15 +15,29 @@
 }
 
 .App-logo {
-  animation: App-logo-spin infinite 1s linear;
+  animation: App-logo-spin infinite 2s linear;
   height: 80px;
 }
 
+button {
+  background-color: #003d55;
+  color: hsl(106, 100%, 26%);
+  font-size: 3rem;
+}
+
+input {
+  margin-left: 10px;
+  font-size: 3rem;
+}
+label {
+  font-size: 3rem;
+}
+
 .App-header {
-  background-color: #227755;
+  background-color: hsl(197, 100%, 17%);
   height: 150px;
   padding: 20px;
-  color: #442200;
+  color: hsl(106, 100%, 26%);
   text-align: center;
 }
 
@@ -46,7 +64,7 @@
 }
 
 .highlight {
-  border: 4px solid #227755;
+  border: 4px solid hsl(22, 100%, 50%);
   border-radius: 10px;
   margin-bottom: 10px;
   padding: 2px;
@@ -58,7 +76,7 @@
   margin-left: 60px;
 }
 .highlight-player {
-  border: 4px solid #227755;
+  border: 4px solid hsl(22, 100%, 50%);
   border-radius: 10px;
   padding: 10px;
   /* margin-top: 30px; */
@@ -128,7 +146,7 @@ h4.book {
 
 .submit {
   font-size: 40px;
-  background-color: #227755;
+  background-color: hsl(106, 100%, 26%);
 }
 .bigger {
   font-size: 80px;

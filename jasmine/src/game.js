@@ -22,7 +22,7 @@ class Game {
 
   book(request, result) {
     if (result === "Go fish") {
-      return (`${request.playerWhoWasAsked} said ${result} to ${request.playerWhoAsked}`)
+      return (`${request.playerWhoAsked} asked ${request.playerWhoWasAsked} for ${new Card(request.desired_rank, 'suit').rankValue()} and went fishing`)
     } else {
       return (`${request.playerWhoAsked} took the ${result} from ${request.playerWhoWasAsked}`)
     }
@@ -91,6 +91,7 @@ class Game {
       return this.botRequest(this.playerWhoIsPlaying())
     } else {
       this.nextTurn()
+      return `${this.playerWhoIsPlaying().name()} is out of cards`
     }
   }
 
@@ -103,7 +104,7 @@ class Game {
 
   randomPlayer() {
     let playerToAsk = this.players()[Math.floor(Math.random() * this.players().length)]
-    while (playerToAsk === this.playerWhoIsPlaying() && playerToAsk.cardsLeft() > 0) {
+    while (playerToAsk.cardsLeft() === 0 || playerToAsk === this.playerWhoIsPlaying()) {
       playerToAsk = this.players()[Math.floor(Math.random() * this.players().length)]
     }
     return playerToAsk
@@ -115,7 +116,7 @@ class Game {
 
   gameEnd() {
     const players = this.players().slice()
-    return players.sort((pl, pl2) => pl.points() - pl2.points()).reverse();
+    return players.reverse().sort((pl, pl2) => pl.points() - pl2.points()).reverse();
   }
 
   takeCard(player) {

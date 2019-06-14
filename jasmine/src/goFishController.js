@@ -4,8 +4,8 @@ class GoFishController {
   }
 
   login() {
-    const view = new LoginView(this.startGame.bind(this))
-    view.draw(this.container())
+    const view = new LoginView(this.startGame.bind(this), this.container())
+    view.draw()
   }
 
   startGame(name) {
@@ -16,7 +16,7 @@ class GoFishController {
 
   endGame(game) {
     const view = new EndGameView(game, this.container(), this.login.bind(this))
-    view.draw(this.container())
+    view.draw()
   }
 }
 window.controller = new GoFishController();

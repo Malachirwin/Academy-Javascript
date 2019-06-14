@@ -3,8 +3,11 @@ describe('GameView', () => {
     container = document.createElement('div')
     container.id = "main"
     document.body.appendChild(container)
+    function callBack() {
+      return "Game Over"
+    }
     game = new Game("Malachi")
-    view = new GameView(game, container)
+    view = new GameView(callBack.bind(this), game, container)
     view.draw()
   });
 
@@ -34,12 +37,12 @@ describe('GameView', () => {
   });
 
   it("requests a card", () => {
-    game.players()[0].setHand([new Card('5', 'H'), new Card('A', 'S'), new Card('6', 'D'), new Card('J', 'C')])
-    game.players()[1].setHand([new Card('5', 'D'), new Card('4', 'S'), new Card('7', 'D'), new Card('K', 'C')])
-    game.players()[2].setHand([new Card('15', 'H'), new Card('2', 'S'), new Card('20', 'D'), new Card('EK', 'C')])
-    game.players()[3].setHand([new Card('42', 'H'), new Card('32', 'S'), new Card('87', 'D'), new Card('62', 'C')])
+    game.players()[0].setHand([new Card('5', 'H')])
+    game.players()[1].setHand([new Card('5', 'D'), new Card('4', 'S')])
+    game.players()[2].setHand([new Card('6', 'H')])
+    game.players()[3].setHand([new Card('2', 'H')])
     view.draw()
-    const numberOfCardsInHandBefore = 4
+    const numberOfCardsInHandBefore = 1
     expect(document.querySelectorAll('.card-in-hand').length).toEqual(numberOfCardsInHandBefore)
     document.querySelector('.card-in-hand').click()
     document.querySelector('.bot').click()

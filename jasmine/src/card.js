@@ -18,6 +18,10 @@ class Card {
     return `${this.ranks[this.rank()]} of ${this.suits[this.suit()]}`
   }
 
+  rankValue() {
+    return this.ranks[this.rank()]
+  }
+
   toImgPath() {
     return `public/cards/${this.suit().toLowerCase()}${this.rank().toLowerCase()}.png`
   }

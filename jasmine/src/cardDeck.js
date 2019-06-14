@@ -16,7 +16,7 @@ class CardDeck {
 
   refill(player) {
     [1, 2, 3, 4, 5].forEach((num) => {
-      card = this.takeCard()
+      const card = this.takeCard()
       player.addCards([])
       if (card) { player.addCards([card]) }
     })

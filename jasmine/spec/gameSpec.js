@@ -45,7 +45,7 @@ describe("Game", () => {
     player1.setHand([])
     player3.setHand([])
     player4.setHand([])
-    expect(JSON.stringify(game.winner())).toEqual(JSON.stringify([player2, player4, player3, player1]))
+    expect(JSON.stringify(game.winner())).toEqual(JSON.stringify([player2, player1, player3, player4]))
   })
 
   it("gives five cards to a player if they run out of cards", () => {
@@ -55,5 +55,15 @@ describe("Game", () => {
     expect(game.doTurn(playerRequest)).toEqual("3 of Diamonds")
     expect(player4.cardsLeft()).toEqual(5)
     expect(player3.cardsLeft()).toEqual(2)
+  })
+
+  it("play around and can play bot turns", () => {
+    game.deck().removeAllCardsFromDeck()
+    player1.setHand([new Card('3', 'S'), new Card('4', 'S')])
+    player2.setHand([new Card('3', 'D')])
+    player3.setHand([])
+    player4.setHand([])
+    game.nextTurn()
+    expect(game.botTurn()).toEqual(`${player2.name()} took the 3 of Spades from ${player1.name()}`)
   })
 })
